@@ -1,0 +1,18 @@
+#! /bin/bash
+
+makeAMakefile()
+{
+   executablefile = "$1"; shift
+   cfiles = $*
+   ofiles = ${cfiles//.c/.o}
+   for file in $*; do
+      echo"${file//.c/.o}:$file
+      echo -e "\tgcc -c $file"
+   done
+
+   echo -e "clean:\n\trm *.o $executablefile"
+   echo -e "depend:\n\t.makedepend $cfiles"
+   echo -e "$executablefile: $ofiles\n\tgcc $ofiles -o $executablefile"
+}
+
+makeAMakefile file0.c flie1.c
